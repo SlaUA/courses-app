@@ -1,0 +1,33 @@
+:host {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 10px;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.logo {
+  width: 50px;
+  height: 40px;
+}
+
+.logoText {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.right {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.login {
+  padding: 0 10px;
+}
