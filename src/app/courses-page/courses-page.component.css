@@ -1,1 +1,16 @@
+.searchHeader {
+  display: flex;
+}
 
+.left {
+  display: flex;
+  flex-grow: 1;
+}
+
+.searchInput {
+  width: 40%;
+}
+
+.searchButton {
+  margin-left: 10px;
+}
