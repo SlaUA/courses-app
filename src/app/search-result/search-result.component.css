@@ -1,0 +1,41 @@
+:host {
+  display: flex;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid black;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  font-weight: 700;
+}
+
+.title {
+  flex-grow: 1;
+}
+
+.creationDate {
+  margin-left: 10px;
+}
+
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 10px 15px;
+}
