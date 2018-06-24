@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { MomentModule } from 'ngx-moment';
 
 import { AppComponent } from './app.component';
-import { PageComponent } from './core/page/page.component';
-import { HeaderComponent } from './core/header/header.component';
-import { FooterComponent } from './core/footer/footer.component';
+import { PageComponent } from './shared/page/page.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { FooterComponent } from './shared/footer/footer.component';
 import { CoursesPageComponent } from './courses-page/courses-page.component';
-import { BreadcrumbsComponent } from './core/breadcrumbs/breadcrumbs.component';
-import { SearchResultsComponent } from './courses-page/search-results/search-results.component';
-import { SearchResultComponent } from './courses-page/search-result/search-result.component';
+import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
+import { CourseListComponent } from './courses-page/course-list/course-list.component';
+import { CourseDetailsComponent } from './courses-page/course-details/course-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,8 +18,8 @@ import { SearchResultComponent } from './courses-page/search-result/search-resul
     FooterComponent,
     CoursesPageComponent,
     BreadcrumbsComponent,
-    SearchResultsComponent,
-    SearchResultComponent
+    CourseListComponent,
+    CourseDetailsComponent
   ],
   imports: [MomentModule, BrowserModule],
   providers: [],
