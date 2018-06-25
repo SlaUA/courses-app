@@ -20,6 +20,10 @@ export class CoursesPageComponent implements OnInit {
     this.clearFindInput();
   }
 
+  loadMoreCourses() {
+    console.log('loading more...');
+  }
+
   clearFindInput() {
     this.findInputValue = '';
   }

@@ -20,4 +20,8 @@ export class CourseListComponent implements OnInit {
   handleDeleteCourse(courseId: number) {
     console.log(`courseID to remove: ${courseId}`);
   }
+
+  handleEditCourse(courseId: number) {
+    console.log(`courseID to edit: ${courseId}`);
+  }
 }

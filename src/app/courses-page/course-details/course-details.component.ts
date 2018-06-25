@@ -8,8 +8,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class CourseDetailsComponent {
   @Input() data: object;
   @Output() deleteCourse = new EventEmitter<number>();
+  @Output() editCourse = new EventEmitter<number>();
 
   onDeleteCourse(courseId: number) {
     this.deleteCourse.emit(courseId);
+  }
+
+  onEditCourse(courseId: number) {
+    this.editCourse.emit(courseId);
   }
 }

@@ -3,6 +3,7 @@
   padding: 10px;
   margin: 10px 0;
   border: 1px solid black;
+  height: 130px;
 }
 
 .wrapper {
@@ -17,11 +18,17 @@
 
 .header {
   display: flex;
+  flex-shrink: 0;
   font-weight: 700;
 }
 
 .title {
   flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.duration {
+  flex-shrink: 0;
 }
 
 .creationDate {
@@ -38,4 +45,5 @@
   flex-direction: column;
   justify-content: space-around;
   margin: 10px 15px;
+  flex-shrink: 0;
 }
