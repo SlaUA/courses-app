@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MomentModule } from 'ngx-moment';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { PageComponent } from './shared/page/page.component';
@@ -21,7 +22,7 @@ import { CourseDetailsComponent } from './courses-page/course-details/course-det
     CourseListComponent,
     CourseDetailsComponent
   ],
-  imports: [MomentModule, BrowserModule],
+  imports: [MomentModule, BrowserModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent]
 })

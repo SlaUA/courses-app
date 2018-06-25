@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div class="info">
     <div class="header">
-      <div class="title">Video course {{data.courseNumber}}</div>
+      <div class="title">Video course {{data.id}}</div>
       <div class="duration">{{data.duration | amDuration: 'minutes'}}</div>
       <div class="creationDate">{{data.creationDate | date:'MM.dd.yyyy'}}</div>
     </div>
@@ -15,6 +15,6 @@
   </div>
   <div class="actions">
     <button class="btn btn-warning">Edit</button>
-    <button class="btn btn-danger">Delete</button>
+    <button (click)="onDeleteCourse(data.id)" class="btn btn-danger">Delete</button>
   </div>
 </div>
