@@ -4,7 +4,7 @@ import { CourseDetailsComponent } from './course-details.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MomentModule } from 'ngx-moment';
 
-fdescribe('CourseDetailsComponent', () => {
+describe('CourseDetailsComponent', () => {
   let component: CourseDetailsComponent;
   let fixture: ComponentFixture<CourseDetailsComponent>;
 
