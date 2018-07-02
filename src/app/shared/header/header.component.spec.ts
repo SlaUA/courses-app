@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 import { HeaderComponent } from './header.component';
 
@@ -22,5 +23,10 @@ describe('HeaderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should have a title "Video courses"', () => {
+    const debugElement: DebugElement = fixture.debugElement;
+    const title = debugElement.query(By.css('.logoText')).nativeElement.textContent;
+    expect(title).toEqual('Video courses');
   });
 });
