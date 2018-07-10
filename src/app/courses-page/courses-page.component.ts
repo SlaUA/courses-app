@@ -6,25 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./courses-page.component.css']
 })
 export class CoursesPageComponent implements OnInit {
-  private findInputValue: string;
+  findInputValue: string;
 
-  ngOnInit() {
-    this.clearFindInput();
-  }
+  ngOnInit() {}
 
   findCourse() {
     if (!this.findInputValue) {
       return;
     }
     console.log(`text to find: ${this.findInputValue}`);
-    this.clearFindInput();
+    this.findInputValue = '';
   }
 
   loadMoreCourses() {
     console.log('loading more...');
-  }
-
-  clearFindInput() {
-    this.findInputValue = '';
   }
 }
