@@ -22,7 +22,7 @@ export default class CoursesService {
        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
       duration: 120,
-      creationDate: Date.now()
+      creationDate: 1536285929000
     },
     {
       id: 2,
@@ -33,7 +33,7 @@ export default class CoursesService {
        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
       duration: 86,
-      creationDate: Date.now()
+      creationDate: Date.now(),
     },
     {
       id: 3,
@@ -44,7 +44,7 @@ export default class CoursesService {
        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
       duration: 12,
-      creationDate: Date.now()
+      creationDate: 1546221737000
     },
     {
       id: 4,
@@ -55,7 +55,7 @@ export default class CoursesService {
        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
       duration: 55,
-      creationDate: Date.now()
+      creationDate: 1526785529000
     }
   ];
 
