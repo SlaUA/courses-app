@@ -24,9 +24,6 @@ export class CoursesPageComponent implements OnInit {
   }
 
   findCourse() {
-    if (!this.findInputValue) {
-      return this.courseList = this.coursesService.getAllCourses();
-    }
     this.courseList = this.filterByName.transform(
       this.coursesService.getAllCourses(),
       this.findInputValue
