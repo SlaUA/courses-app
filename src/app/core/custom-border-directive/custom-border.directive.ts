@@ -10,13 +10,12 @@ export class CustomBorderDirective implements OnInit {
   constructor(private el: ElementRef) {}
 
   ngOnInit() {
-    const today = moment();
-    console.log(today);
-    // if(creationDate < currentDate && creationDate >= currentDate - 14days){
-    //   this.el.nativeElement.style.border = '1px solid red';
-    // }
-    // if(){
-
-    // }
+    const daysDifference = moment().diff(this.appCustomBorder, 'days');
+    if (daysDifference > 0 && daysDifference <= 14) {
+      this.el.nativeElement.style.borderColor = 'green';
+    }
+    if (daysDifference < 0) {
+      this.el.nativeElement.style.borderColor = 'blue';
+    }
   }
 }
