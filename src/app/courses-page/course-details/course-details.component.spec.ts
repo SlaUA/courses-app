@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CourseDetailsComponent } from './course-details.component';
 import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
-import { MomentModule } from 'ngx-moment';
 import { By } from '@angular/platform-browser';
 import { detectChanges } from '@angular/core/src/render3';
 
@@ -13,7 +12,6 @@ describe('CourseDetailsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [MomentModule],
       declarations: [CourseDetailsComponent]
     }).compileComponents();
   }));

@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MomentModule } from 'ngx-moment';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -11,6 +10,7 @@ import { CoursesPageComponent } from './courses-page/courses-page.component';
 import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
 import { CourseListComponent } from './courses-page/course-list/course-list.component';
 import { CourseDetailsComponent } from './courses-page/course-details/course-details.component';
+import { CustomBorderDirective } from './core/custom-border-directive/custom-border.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,9 +20,10 @@ import { CourseDetailsComponent } from './courses-page/course-details/course-det
     CoursesPageComponent,
     BreadcrumbsComponent,
     CourseListComponent,
-    CourseDetailsComponent
+    CourseDetailsComponent,
+    CustomBorderDirective
   ],
-  imports: [MomentModule, BrowserModule, FormsModule],
+  imports: [BrowserModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent]
 })
