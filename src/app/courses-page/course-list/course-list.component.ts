@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import CoursesService, {
-  Course
-} from '../../core/courses-service/courses.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { Course } from '../../core/services/courses-service/courses.service';
 
 @Component({
   selector: 'app-course-list',
@@ -9,13 +7,9 @@ import CoursesService, {
   styleUrls: ['./course-list.component.css']
 })
 export class CourseListComponent implements OnInit {
-  courseList: Course[];
+  @Input() courseList: Course[];
 
-  constructor(private coursesService: CoursesService) {}
-
-  ngOnInit() {
-    this.courseList = this.coursesService.getAllCourses();
-  }
+  ngOnInit() {}
 
   handleDeleteCourse(courseId: number) {
     console.log(`courseID to remove: ${courseId}`);

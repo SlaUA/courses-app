@@ -13,6 +13,7 @@ import { CourseDetailsComponent } from './courses-page/course-details/course-det
 import { CustomBorderDirective } from './core/directives/custom-border-directive/custom-border.directive';
 import { DurationPipe } from './core/pipes/duration/duration.pipe';
 import { OrderByPipe } from './core/pipes/order-by/order-by.pipe';
+import { FilterByNamePipe } from './core/pipes/filter-by-name/filter-by-name.pipe';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { OrderByPipe } from './core/pipes/order-by/order-by.pipe';
     CustomBorderDirective,
     DurationPipe,
     OrderByPipe,
+    FilterByNamePipe,
   ],
   imports: [BrowserModule, FormsModule],
   providers: [],
