@@ -10,7 +10,10 @@ import { CoursesPageComponent } from './courses-page/courses-page.component';
 import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
 import { CourseListComponent } from './courses-page/course-list/course-list.component';
 import { CourseDetailsComponent } from './courses-page/course-details/course-details.component';
-import { CustomBorderDirective } from './core/custom-border-directive/custom-border.directive';
+import { CustomBorderDirective } from './core/directives/custom-border-directive/custom-border.directive';
+import { DurationPipe } from './core/pipes/duration/duration.pipe';
+import { OrderByPipe } from './core/pipes/order-by/order-by.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +24,9 @@ import { CustomBorderDirective } from './core/custom-border-directive/custom-bor
     BreadcrumbsComponent,
     CourseListComponent,
     CourseDetailsComponent,
-    CustomBorderDirective
+    CustomBorderDirective,
+    DurationPipe,
+    OrderByPipe,
   ],
   imports: [BrowserModule, FormsModule],
   providers: [],

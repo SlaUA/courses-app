@@ -47,3 +47,7 @@
   margin: 10px 15px;
   flex-shrink: 0;
 }
+
+.topRated {
+  color: gold;
+}
