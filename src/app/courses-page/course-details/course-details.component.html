@@ -2,7 +2,7 @@
   <div class="info">
     <div class="header">
       <div class="title">{{data.title | uppercase}}
-        <span *ngIf="data.topRated" class="topRated">&#9733;</span>
+        <span [ngClass]="{topRated: data.topRated}">&#9733;</span>
       </div>
       <div class="duration">{{data.duration | duration}}</div>
       <div class="creationDate">{{data.creationDate | date:'dd.MM.yyyy'}}</div>
