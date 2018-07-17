@@ -1,6 +1,6 @@
 <app-course-details 
-  (deleteCourse)="handleDeleteCourse($event)"
-  (editCourse)="handleEditCourse($event)"
+  (editCourse)=handleEdit($event)
+  (deleteCourse)=handleDelete($event)
   [data]="course" *ngFor="let course of (courseList | orderBy)"
   [appCustomBorder]="course.creationDate">
 </app-course-details>

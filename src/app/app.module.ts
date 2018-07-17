@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgxWindowTokenModule } from 'ngx-window-token';
 
 import { AppComponent } from './app.component';
 import { PageComponent } from './shared/page/page.component';
@@ -30,7 +31,7 @@ import { FilterByNamePipe } from './core/pipes/filter-by-name/filter-by-name.pip
     OrderByPipe,
     FilterByNamePipe,
   ],
-  imports: [BrowserModule, FormsModule],
+  imports: [BrowserModule, FormsModule, NgxWindowTokenModule],
   providers: [],
   bootstrap: [AppComponent]
 })

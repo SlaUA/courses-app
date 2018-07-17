@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Course } from '../../core/services/courses-service/courses.service';
 
 @Component({
@@ -6,16 +6,15 @@ import { Course } from '../../core/services/courses-service/courses.service';
   templateUrl: './course-list.component.html',
   styleUrls: ['./course-list.component.css']
 })
-export class CourseListComponent implements OnInit {
+export class CourseListComponent {
   @Input() courseList: Course[];
+  @Output() deleteCourse = new EventEmitter<any>();
+  @Output() editCourse = new EventEmitter<any>();
 
-  ngOnInit() {}
-
-  handleDeleteCourse(courseId: number) {
-    console.log(`courseID to remove: ${courseId}`);
+  handleEdit($event) {
+    this.editCourse.emit($event);
   }
-
-  handleEditCourse(courseId: number) {
-    console.log(`courseID to edit: ${courseId}`);
+  handleDelete($event) {
+    this.deleteCourse.emit($event);
   }
 }
