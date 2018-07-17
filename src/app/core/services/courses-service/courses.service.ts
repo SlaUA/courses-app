@@ -9,6 +9,14 @@ export interface Course {
   topRated: boolean;
 }
 
+interface NewCourse {
+  title: string;
+  description: string;
+  duration: number;
+  creationDate: number;
+  topRated: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +32,7 @@ export default class CoursesService {
        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
       duration: 120,
       creationDate: 1536285929000,
-      topRated: false,
+      topRated: false
     },
     {
       id: 2,
@@ -36,7 +44,7 @@ export default class CoursesService {
        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
       duration: 86,
       creationDate: 1531031755000,
-      topRated: false,
+      topRated: false
     },
     {
       id: 3,
@@ -48,7 +56,7 @@ export default class CoursesService {
        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
       duration: 12,
       creationDate: 1546221737000,
-      topRated: false,
+      topRated: false
     },
     {
       id: 4,
@@ -60,11 +68,34 @@ export default class CoursesService {
        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
       duration: 55,
       creationDate: 1526785529000,
-      topRated: true,
+      topRated: true
     }
   ];
 
   getAllCourses(): Course[] {
+    return this.allCourses;
+  }
+
+  createCourse(courseDetails: NewCourse): Course[] {
+    // last course id will be incremented to have consistent values
+    const id = this.allCourses[this.allCourses.length - 1].id + 1;
+    this.allCourses = [{ id, ...courseDetails }, ...this.allCourses];
+    return this.allCourses;
+  }
+
+  getCourseById(id: number): Course | null {
+    return this.allCourses.find((course) => course.id === id);
+  }
+
+  updateCourse(id: number, courseDetails: NewCourse): Course[] {
+    this.allCourses = this.allCourses.map(
+      (course) => (course.id === id ? { ...course, ...courseDetails } : course)
+    );
+    return this.allCourses;
+  }
+
+  removeCourse(id: number): Course[] {
+    this.allCourses = this.allCourses.filter((course) => course.id !== id);
     return this.allCourses;
   }
 }
