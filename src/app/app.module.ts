@@ -17,6 +17,7 @@ import { DurationPipe } from './core/pipes/duration/duration.pipe';
 import { OrderByPipe } from './core/pipes/order-by/order-by.pipe';
 import { FilterByNamePipe } from './core/pipes/filter-by-name/filter-by-name.pipe';
 import { routes } from './core/routes/routes';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { routes } from './core/routes/routes';
     DurationPipe,
     OrderByPipe,
     FilterByNamePipe,
+    LoginPageComponent,
   ],
   imports: [RouterModule.forRoot(routes), BrowserModule, FormsModule, NgxWindowTokenModule],
   providers: [],
