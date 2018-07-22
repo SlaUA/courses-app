@@ -2,7 +2,7 @@
   <img class="logo" src="assets/bulb.svg" alt="Logo">
   <div class="logoText">Video courses</div>
 </div>
-<div class="right">
+<div class="right" *ngIf="isAuthenticated">
   <div class="login">{{user.firstName}}</div>
-  <button class="btn btn-secondary">Log off</button>
+  <button (click)="onLogout()" class="btn btn-secondary">Log out</button>
 </div>

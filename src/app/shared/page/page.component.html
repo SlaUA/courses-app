@@ -1,5 +1,5 @@
 <app-header></app-header>
-<app-breadcrumbs></app-breadcrumbs>
+<app-breadcrumbs *ngIf="isAuthenticated"></app-breadcrumbs>
 <div class="contentWrapper">
   <ng-content></ng-content>
 </div>

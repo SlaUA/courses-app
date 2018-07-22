@@ -3,7 +3,8 @@ import { NgxWindowTokenModule, WINDOW } from 'ngx-window-token';
 
 interface User {
   email: string;
-  to: string;
+  password?: string;
+  hash?: string;
 }
 
 @Injectable({
@@ -24,8 +25,11 @@ export class AuthorizationService {
     }
   }
 
-  login(user: User) {
-    this.user = user;
+  login(userData: User) {
+    this.user = {
+      email: userData.email,
+      hash: this.window.btoa(userData.password)
+    };
     this.window.localStorage.setItem(this.NAMESPACE, JSON.stringify(this.user));
   }
 

@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginPageComponent } from './login-page.component';
+import { FormsModule } from '@angular/forms';
+import { NgxWindowTokenModule } from 'ngx-window-token';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoginPageComponent', () => {
   let component: LoginPageComponent;
@@ -8,9 +12,10 @@ describe('LoginPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginPageComponent ]
-    })
-    .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [LoginPageComponent],
+      imports: [FormsModule, NgxWindowTokenModule, RouterTestingModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
