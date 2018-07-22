@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgxWindowTokenModule } from 'ngx-window-token';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { PageComponent } from './shared/page/page.component';
@@ -14,6 +16,8 @@ import { CustomBorderDirective } from './core/directives/custom-border-directive
 import { DurationPipe } from './core/pipes/duration/duration.pipe';
 import { OrderByPipe } from './core/pipes/order-by/order-by.pipe';
 import { FilterByNamePipe } from './core/pipes/filter-by-name/filter-by-name.pipe';
+import { routes } from './core/routes/routes';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -29,8 +33,9 @@ import { FilterByNamePipe } from './core/pipes/filter-by-name/filter-by-name.pip
     DurationPipe,
     OrderByPipe,
     FilterByNamePipe,
+    LoginPageComponent,
   ],
-  imports: [BrowserModule, FormsModule],
+  imports: [RouterModule.forRoot(routes), BrowserModule, FormsModule, NgxWindowTokenModule],
   providers: [],
   bootstrap: [AppComponent]
 })

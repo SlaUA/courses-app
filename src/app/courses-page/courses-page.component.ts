@@ -23,6 +23,15 @@ export class CoursesPageComponent implements OnInit {
     this.courseList = this.coursesService.getAllCourses();
   }
 
+  handleDeleteCourse(courseId: number) {
+    const userChoice = confirm('Do you really want to delete this course?');
+    if (userChoice) {
+      this.courseList = this.coursesService.removeCourse(courseId);
+    }
+  }
+
+  handleEditCourse(courseId: number) {}
+
   findCourse() {
     this.courseList = this.filterByName.transform(
       this.coursesService.getAllCourses(),

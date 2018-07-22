@@ -1,0 +1,11 @@
+<div class="wrapper">
+  <label>
+    Email: *required
+    <input class="form-control" [(ngModel)]="email" type="text" placeholder="email">
+  </label>
+  <label>
+    Password: *required
+    <input class="form-control" [(ngModel)]="password" type="password" placeholder="password">
+  </label>
+  <button class="btn btn-light" (click)="onLogin()">Login</button>
+</div>
