@@ -18,6 +18,7 @@ import { OrderByPipe } from './core/pipes/order-by/order-by.pipe';
 import { FilterByNamePipe } from './core/pipes/filter-by-name/filter-by-name.pipe';
 import { routes } from './core/routes/routes';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { AddCoursePageComponent } from './add-course-page/add-course-page.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
     OrderByPipe,
     FilterByNamePipe,
     LoginPageComponent,
+    AddCoursePageComponent,
   ],
   imports: [RouterModule.forRoot(routes), BrowserModule, FormsModule, NgxWindowTokenModule],
   providers: [],
