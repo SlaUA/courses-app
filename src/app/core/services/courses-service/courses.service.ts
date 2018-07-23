@@ -20,7 +20,7 @@ interface NewCourse {
 @Injectable({
   providedIn: 'root'
 })
-export default class CoursesService {
+export class CoursesService {
   private allCourses = [
     {
       id: 1,

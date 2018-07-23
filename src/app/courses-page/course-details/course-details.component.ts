@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Course } from '../../core/services/courses-service/courses.service';
 
 @Component({
   selector: 'app-course-details',
@@ -6,7 +7,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
   styleUrls: ['./course-details.component.css']
 })
 export class CourseDetailsComponent implements OnInit {
-  @Input() data: object;
+  @Input() data: Course;
   @Output() deleteCourse = new EventEmitter<number>();
   @Output() editCourse = new EventEmitter<number>();
 

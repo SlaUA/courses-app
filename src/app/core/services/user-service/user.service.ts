@@ -7,9 +7,9 @@ export interface User {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export default class UserService {
+export class UserService {
   getCurrentUser(): User {
     return {
       id: 1,

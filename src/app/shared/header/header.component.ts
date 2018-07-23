@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import UserService, {
-  User
-} from '../../core/services/user-service/user.service';
+import { UserService } from '../../core/services/user-service/user.service';
 import { AuthorizationService } from '../../core/services/authorization/authorization.service';
 import { Router } from '../../../../node_modules/@angular/router';
+import { User } from '../../core/services/user-service/user.service';
 
 @Component({
   selector: 'app-header',
-  providers: [UserService],
+  providers: [],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
@@ -16,9 +15,9 @@ export class HeaderComponent implements OnInit {
   isAuthenticated: boolean;
 
   constructor(
-    private userService: UserService,
-    private authService: AuthorizationService,
-    private router: Router,
+    public userService: UserService,
+    public authService: AuthorizationService,
+    public router: Router,
   ) {}
   ngOnInit() {
     this.user = this.userService.getCurrentUser();

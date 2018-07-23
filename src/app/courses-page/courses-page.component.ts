@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FilterByNamePipe } from '../core/pipes/filter-by-name/filter-by-name.pipe';
-import CoursesService, {
+import {
+  CoursesService,
   Course
 } from '../core/services/courses-service/courses.service';
 
@@ -11,12 +12,12 @@ import CoursesService, {
   providers: [FilterByNamePipe]
 })
 export class CoursesPageComponent implements OnInit {
-  findInputValue: string;
+  findInputValue = '';
   courseList: Course[];
 
   constructor(
-    private filterByName: FilterByNamePipe,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private filterByName: FilterByNamePipe
   ) {}
 
   ngOnInit() {
