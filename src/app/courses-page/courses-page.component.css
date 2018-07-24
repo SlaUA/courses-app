@@ -3,21 +3,3 @@
   flex-grow: 1;
   flex-direction: column;
 }
-
-.searchHeader {
-  display: flex;
-  margin-top: 10px;
-}
-
-.left {
-  display: flex;
-  flex-grow: 1;
-}
-
-.searchInput {
-  width: 40%;
-}
-
-.searchButton {
-  margin-left: 10px;
-}

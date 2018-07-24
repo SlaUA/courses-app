@@ -8,7 +8,7 @@ import { AuthorizationService } from '../../core/services/authorization/authoriz
 })
 export class PageComponent implements OnInit {
   constructor(private authService: AuthorizationService) {}
-  private isAuthenticated: boolean;
+  public isAuthenticated: boolean;
 
   ngOnInit() {
     this.isAuthenticated = this.authService.isAuthenticated();

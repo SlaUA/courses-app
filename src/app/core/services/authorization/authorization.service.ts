@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { NgxWindowTokenModule, WINDOW } from 'ngx-window-token';
+import { WINDOW } from 'ngx-window-token';
 
 interface User {
   email: string;
@@ -34,7 +34,6 @@ export class AuthorizationService {
   }
 
   logOut() {
-    console.log(`loggin out, email: ${this.user.email}`);
     this.user = null;
     this.window.localStorage.removeItem(this.NAMESPACE);
   }
