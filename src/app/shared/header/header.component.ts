@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
     public authService: AuthorizationService,
     public router: Router,
   ) {}
+
   ngOnInit() {
     this.user = this.userService.getCurrentUser();
     this.isAuthenticated = this.authService.isAuthenticated();

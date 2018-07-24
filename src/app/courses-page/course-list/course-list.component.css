@@ -1,8 +1,14 @@
 :host {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   height: 100%;
-  overflow-y: auto;
   margin: 10px 0;
+}
+
+.courseListContainer {
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .emptyContainer {
@@ -10,4 +16,28 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-} 
+}
+
+.searchHeader {
+  display: flex;
+  flex-shrink: 0;
+  margin: 10px 0;
+}
+
+.left {
+  display: flex;
+  flex-grow: 1;
+}
+
+.searchInput {
+  width: 40%;
+}
+
+.searchButton {
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+
+.loadMoreButton {
+  flex-shrink: 0;
+}

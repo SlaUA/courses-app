@@ -1,13 +1,1 @@
-<div class="searchHeader">
-  <div class="left">
-    <input [(ngModel)]="findInputValue" class="form-control searchInput" type="text" placeholder="name, fragment or date">
-    <button (click)="findCourse()" class="btn btn-secondary searchButton">Search</button>
-  </div>
-  <button class="btn btn-primary">Add Course</button>
-</div>
-<app-course-list 
-  (deleteCourse)="handleDeleteCourse($event)"
-  (editCourse)="handleEditCourse($event)" 
-  [courseList]="courseList">
-</app-course-list>
-<button (click)="loadMoreCourses()" class="btn btn-light">Load More</button>
+<app-course-list></app-course-list>

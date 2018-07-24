@@ -5,11 +5,12 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './add-course-page.component.html',
   styleUrls: ['./add-course-page.component.css']
 })
-export class AddCoursePageComponent implements OnInit {
+export class AddCoursePageComponent {
+  title: string;
+  description: string;
+  date: string;
+  duration: string;
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  onAddNewCourse() {}
+  onCancel() {}
 }

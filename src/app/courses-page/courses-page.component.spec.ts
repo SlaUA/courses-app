@@ -26,14 +26,4 @@ describe('CoursesPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should NOT call console.log when clicking on find button with empty input', () => {
-    spyOn(console, 'log');
-    component.findCourse();
-    expect(console.log).not.toHaveBeenCalled();
-  });
-  it('should call console.log after clicking on load more button', () => {
-    const spy = spyOn(console, 'log');
-    component.loadMoreCourses();
-    expect(spy).toHaveBeenCalledWith('loading more...');
-  });
 });

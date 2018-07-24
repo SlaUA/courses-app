@@ -6,5 +6,5 @@ import { AddCoursePageComponent } from '../../add-course-page/add-course-page.co
 export const routes: Routes = [
   { path: '', component: CoursesPageComponent },
   { path: 'login', component: LoginPageComponent },
-  { path: 'new', component: AddCoursePageComponent },
+  { path: 'newCourse', component: AddCoursePageComponent },
 ];
