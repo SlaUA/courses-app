@@ -9,7 +9,7 @@ export interface Course {
   topRated: boolean;
 }
 
-interface NewCourse {
+export interface NewCourse {
   title: string;
   description: string;
   duration: number;

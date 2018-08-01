@@ -1,0 +1,23 @@
+:host {
+  width: 480px;
+  margin: 0 auto;
+}
+
+:host,
+label {
+  display: flex;
+  flex-direction: column;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.actionButtons>button {
+  width: 30%;
+}
+
+.description {
+  height: 250px;
+}
