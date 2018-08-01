@@ -1,12 +1,19 @@
 <div class="searchHeader">
   <div class="left">
-    <input [(ngModel)]="findInputValue" class="form-control searchInput" type="text" placeholder="name, fragment or date">
+    <input [(ngModel)]="findInputValue"
+      class="form-control searchInput"
+      type="text"
+      placeholder="name, fragment or date">
     <button (click)="findCourse()" class="btn btn-secondary searchButton">Search</button>
   </div>
   <a routerLink='/newCourse' class="btn btn-primary">Add Course</a>
 </div>
 <div class="courseListContainer">
-  <app-course-details (editCourse)=handleEditCourse($event) (deleteCourse)=handleDeleteCourse($event) [data]="course" *ngFor="let course of (courseList | orderBy)"
+  <app-course-details
+    *ngFor="let course of (courseList | orderBy)"
+    (editCourse)=handleEditCourse($event)
+    (deleteCourse)=handleDeleteCourse($event)
+    [data]="course"
     [appCustomBorder]="course.creationDate">
   </app-course-details>
 </div>
