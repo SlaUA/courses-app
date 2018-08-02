@@ -19,6 +19,8 @@ import { FilterByNamePipe } from './core/pipes/filter-by-name/filter-by-name.pip
 import { routes } from './core/routes/routes';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AddCoursePageComponent } from './add-course-page/add-course-page.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { EditCourseComponent } from './edit-course/edit-course.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { AddCoursePageComponent } from './add-course-page/add-course-page.compon
     FilterByNamePipe,
     LoginPageComponent,
     AddCoursePageComponent,
+    PageNotFoundComponent,
+    EditCourseComponent,
   ],
   imports: [RouterModule.forRoot(routes), BrowserModule, FormsModule, NgxWindowTokenModule],
   providers: [],

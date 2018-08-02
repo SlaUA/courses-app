@@ -4,11 +4,13 @@ import {
   CoursesService
 } from '../../core/services/courses-service/courses.service';
 import { FilterByNamePipe } from '../../core/pipes/filter-by-name/filter-by-name.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-course-list',
   templateUrl: './course-list.component.html',
-  styleUrls: ['./course-list.component.css']
+  styleUrls: ['./course-list.component.css'],
+  providers: [FilterByNamePipe]
 })
 export class CourseListComponent implements OnInit {
   findInputValue = '';
@@ -20,10 +22,13 @@ export class CourseListComponent implements OnInit {
 
   constructor(
     private coursesService: CoursesService,
-    private filterByName: FilterByNamePipe
+    private filterByName: FilterByNamePipe,
+    private router: Router
   ) {}
 
-  handleEditCourse(courseId: number) {}
+  handleEditCourse(courseId: number) {
+    this.router.navigateByUrl(`/courses/${courseId}`);
+  }
 
   handleDeleteCourse(courseId: number) {
     const userChoice = confirm('Do you really want to delete this course?');

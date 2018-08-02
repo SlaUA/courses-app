@@ -1,0 +1,20 @@
+<label>
+  Title
+  <input [(ngModel)]="currentCourse.title" type="text" placeholder="Title">
+</label>
+<label>
+  Description
+  <textarea class="description" [(ngModel)]="currentCourse.description" placeholder="Description"></textarea>
+</label>
+<label>
+  Date
+  <input [(ngModel)]="currentCourse.creationDate" type="text" placeholder="Date">
+</label>
+<label>
+  Duration
+  <input [(ngModel)]="currentCourse.duration" type="text" placeholder="Duration">
+</label>
+<div class="actionButtons">
+  <button (click)="onUpdateCourse()">Save</button>
+  <button (click)="onCancel()">Cancel</button>
+</div>
