@@ -26,10 +26,10 @@ export class EditCourseComponent implements OnInit {
 
   onUpdateCourse() {
     this.coursesService.updateCourse(this.currentCourseId, this.currentCourse);
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('courses');
   }
 
   onCancel() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('courses');
   }
 }

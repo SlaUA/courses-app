@@ -6,7 +6,8 @@ import { PageNotFoundComponent } from '../../page-not-found/page-not-found.compo
 import { EditCourseComponent } from '../../edit-course/edit-course.component';
 
 export const routes: Routes = [
-  { path: '', component: CoursesPageComponent },
+  { path: '', redirectTo: 'courses', pathMatch: 'full' },
+  { path: 'courses', component: CoursesPageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'courses/new', component: AddCoursePageComponent },
   { path: 'courses/:id', component: EditCourseComponent },
