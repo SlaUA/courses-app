@@ -21,6 +21,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { AddCoursePageComponent } from './add-course-page/add-course-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { EditCourseComponent } from './edit-course/edit-course.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { EditCourseComponent } from './edit-course/edit-course.component';
     PageNotFoundComponent,
     EditCourseComponent,
   ],
-  imports: [RouterModule.forRoot(routes), BrowserModule, FormsModule, NgxWindowTokenModule],
+  imports: [RouterModule.forRoot(routes), BrowserModule, FormsModule, NgxWindowTokenModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent]
 })
