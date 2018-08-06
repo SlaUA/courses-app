@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const url = require('url');
 
 module.exports = (server) => {
 
@@ -19,7 +18,7 @@ module.exports = (server) => {
 			res.status(401).send("Wrong password");
 		}
 	});
-		
+
 	router.post('/auth/userinfo', (req, res, next) => {
 		let users = server.db.getState().users,
 			matchedUser = users.find((user) => {
