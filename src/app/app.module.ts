@@ -21,8 +21,8 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { AddCoursePageComponent } from './add-course-page/add-course-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { EditCourseComponent } from './edit-course/edit-course.component';
-import { HttpClientModule } from '@angular/common/http';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BaseUrlHttpInterceptor } from './core/interceptors/base-url-http-interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +43,11 @@ import { HttpClientModule } from '@angular/common/http';
     EditCourseComponent,
   ],
   imports: [RouterModule.forRoot(routes), BrowserModule, FormsModule, NgxWindowTokenModule, HttpClientModule],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: BaseUrlHttpInterceptor,
+    multi: true,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

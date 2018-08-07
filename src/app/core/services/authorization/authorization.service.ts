@@ -1,6 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { WINDOW } from 'ngx-window-token';
+import { BehaviorSubject, of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 interface User {
   email: string;
@@ -12,44 +15,56 @@ interface User {
   providedIn: 'root'
 })
 export class AuthorizationService {
-  user: User | null;
+  private TOKEN_NAMESPACE = 'token';
+
   private window: Window;
   private http: HttpClient;
-  private NAMESPACE = 'AuthorizationService';
+  private loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(@Inject(WINDOW) _window, http: HttpClient) {
+  constructor(@Inject(WINDOW) _window, http: HttpClient, private router: Router) {
     this.window = _window;
     this.http = http;
+    let isLoggedIn;
 
     try {
-      this.user = JSON.parse(this.window.localStorage.getItem(this.NAMESPACE));
+      isLoggedIn = Boolean(JSON.parse(this.window.localStorage.getItem(this.TOKEN_NAMESPACE)));
+      this.loggedInSubject.next(isLoggedIn);
     } catch (error) {
-      this.user = null;
+      this.loggedInSubject.next(false);
     }
   }
 
   login(userData: User) {
-    this.http.post('http://localhost:4201/auth/login', {
-      login: userData.email,
-      password: userData.password
-    }).subscribe((response) => console.log(response));
-    // this.user = {
-    //   email: userData.email,
-    //   hash: this.window.btoa(userData.password)
-    // };
-    // this.window.localStorage.setItem(this.NAMESPACE, JSON.stringify(this.user));
+    return this.http
+      .post('auth/login', {
+        login: userData.email,
+        password: userData.password
+      })
+      .pipe(
+        switchMap((response: any) => {
+
+          if (!response.token) {
+            return of(false);
+          }
+
+          this.loggedInSubject.next(true);
+          this.window.localStorage.setItem(this.TOKEN_NAMESPACE, JSON.stringify(response.token));
+          return of(true);
+        })
+      );
   }
 
   logOut() {
-    this.user = null;
-    this.window.localStorage.removeItem(this.NAMESPACE);
+    this.loggedInSubject.next(false);
+    this.window.localStorage.removeItem(this.TOKEN_NAMESPACE);
+    this.router.navigateByUrl('/login');
   }
 
   getUserInfo() {
-    return this.user;
+    // return this.user;
   }
 
   isAuthenticated() {
-    return Boolean(this.user);
+    return this.loggedInSubject.asObservable();
   }
 }
