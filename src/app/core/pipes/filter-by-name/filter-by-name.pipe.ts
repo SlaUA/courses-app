@@ -6,6 +6,6 @@ import { Course } from '../../services/courses-service/courses.service';
 })
 export class FilterByNamePipe implements PipeTransform {
   transform(value: Course[], name: string): any {
-    return value.filter((item) => item.title.indexOf(name) !== -1);
+    return name ? value.filter((item) => item.name.indexOf(name) !== -1) : value;
   }
 }

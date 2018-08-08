@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CoursesService, Course, NewCourse } from '../core/services/courses-service/courses.service';
+import { CoursesService, Course } from '../core/services/courses-service/courses.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -20,7 +20,9 @@ export class EditCourseComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
       this.currentCourseId = parseInt(params.id, 10);
-      this.currentCourse = this.coursesService.getCourseById(this.currentCourseId);
+      this.coursesService.getCourseById(this.currentCourseId).subscribe((course)=>{
+        this.currentCourse = course;
+      });
     });
   }
 

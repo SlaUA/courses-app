@@ -1,11 +1,11 @@
 <div class="wrapper">
   <div class="info">
     <div class="header">
-      <div class="title">{{data.title | uppercase}}
-        <span [ngClass]="{topRated: data.topRated}">&#9733;</span>
+      <div class="title">{{data.name | uppercase}}
+        <span [ngClass]="{topRated: data.isTopRated}">&#9733;</span>
       </div>
-      <div class="duration">{{data.duration | duration}}</div>
-      <div class="creationDate">{{data.creationDate | date:'dd.MM.yyyy'}}</div>
+      <div class="duration">{{data.length | duration}}</div>
+      <div class="creationDate">{{data.date | date:'dd.MM.yyyy'}}</div>
     </div>
     <div class="description">{{data.description}}</div>
   </div>
