@@ -1,101 +1,90 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { flatMap, switchMap, map } from 'rxjs/operators';
 
 export interface Course {
   id: number;
-  title: string;
+  name: string;
   description: string;
-  duration: number;
-  creationDate: number;
-  topRated: boolean;
+  length: number;
+  date: number;
+  isTopRated: boolean;
+  authors: any[];
 }
 
 export interface NewCourse {
-  title: string;
+  name: string;
   description: string;
-  duration: number;
-  creationDate: number;
-  topRated: boolean;
+  length: number;
+  date: number;
+  isTopRated: boolean;
+  authors: any[];
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
-  private allCourses = [
-    {
-      id: 1,
-      title: 'Video course 1',
-      description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-       sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-       Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-      duration: 120,
-      creationDate: 1536285929000,
-      topRated: false
-    },
-    {
-      id: 2,
-      title: 'Video course 2',
-      description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-       sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-       Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-      duration: 86,
-      creationDate: 1531031755000,
-      topRated: false
-    },
-    {
-      id: 3,
-      title: 'Video course 3',
-      description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-       sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-       Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-      duration: 12,
-      creationDate: 1546221737000,
-      topRated: false
-    },
-    {
-      id: 4,
-      title: 'Video course 4',
-      description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-       sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-       Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-      duration: 55,
-      creationDate: 1526785529000,
-      topRated: true
-    }
-  ];
+  private allCourses: BehaviorSubject<Course []> = new BehaviorSubject<Course []>([]);
+  private lastCount: any = 4;
+  private loadMoreCount: any = 4;
 
-  getAllCourses(): Course[] {
-    return this.allCourses;
+  constructor(private http: HttpClient) {
+    this.retrieveAllCourses().subscribe((response: Course[]) => {
+      this.allCourses.next(response);
+    });
   }
 
-  createCourse(courseDetails: NewCourse): Course[] {
-    // last course id will be incremented to have consistent values
-    const id = this.allCourses[this.allCourses.length - 1].id + 1;
-    this.allCourses = [{ id, ...courseDetails }, ...this.allCourses];
-    return this.allCourses;
+  retrieveAllCourses() {
+    return this.http.get(`courses?start=0&count=${this.lastCount}`);
   }
 
-  getCourseById(id: number): Course | null {
-    return this.allCourses.find((course) => course.id === id);
+  getAllCourses(): Observable<Course[]> {
+    return this.allCourses.asObservable();
   }
 
-  updateCourse(id: number, courseDetails: NewCourse): Course[] {
-    this.allCourses = this.allCourses.map(
-      (course) => (course.id === id ? { ...course, ...courseDetails } : course)
-    );
-    return this.allCourses;
+  loadMoreCourses() {
+    this.lastCount += this.loadMoreCount;
+    this.retrieveAllCourses().subscribe((response: Course[]) => {
+      this.allCourses.next(response);
+    });
   }
 
-  removeCourse(id: number): Course[] {
-    this.allCourses = this.allCourses.filter((course) => course.id !== id);
-    return this.allCourses;
+  findCourse(textToFind: String) {
+    this.http.get(`courses?textFragment=${textToFind}`).subscribe((response: Course[]) => {
+      this.allCourses.next(response);
+    });
+  }
+
+  createCourse(courseDetails: NewCourse): Observable<any> {
+    return this.http
+      .post(`courses`, courseDetails)
+      .pipe(
+        flatMap(() => this.retrieveAllCourses()),
+        map((response: Course[]) => {
+          this.allCourses.next(response);
+        })
+      );
+  }
+
+  getCourseById(id: number): Observable<Course | null> {
+    return this.allCourses.pipe(switchMap((courses) => {
+      return of(courses.find((course) => course.id === id));
+    }));
+  }
+
+  updateCourse(id: number, courseDetails: NewCourse) {
+    this.http
+      .patch(`courses/${id}`, courseDetails)
+      .pipe(flatMap(() => this.retrieveAllCourses()))
+      .subscribe((response: Course[]) => this.allCourses.next(response));
+  }
+
+  removeCourse(id: number) {
+    this.http
+      .delete(`courses/${id}`)
+      .pipe(flatMap(() => this.retrieveAllCourses()))
+      .subscribe((response: Course[]) => this.allCourses.next(response));
   }
 }

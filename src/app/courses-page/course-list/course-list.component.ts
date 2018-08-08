@@ -1,10 +1,8 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import {
-  Course,
-  CoursesService
-} from '../../core/services/courses-service/courses.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Course, CoursesService } from '../../core/services/courses-service/courses.service';
 import { FilterByNamePipe } from '../../core/pipes/filter-by-name/filter-by-name.pipe';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-course-list',
@@ -12,13 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./course-list.component.css'],
   providers: [FilterByNamePipe]
 })
-export class CourseListComponent implements OnInit {
+export class CourseListComponent implements OnInit, OnDestroy {
   findInputValue = '';
   courseList: Course[];
-
-  ngOnInit() {
-    this.courseList = this.coursesService.getAllCourses();
-  }
+  courseListSubscription: Subscription;
 
   constructor(
     private coursesService: CoursesService,
@@ -26,25 +21,31 @@ export class CourseListComponent implements OnInit {
     private router: Router
   ) {}
 
+  ngOnInit() {
+    this.courseListSubscription = this.coursesService.getAllCourses()
+      .subscribe((courses) => this.courseList = courses);
+  }
+
+  ngOnDestroy(){
+    this.courseListSubscription.unsubscribe();
+  }
+
   handleEditCourse(courseId: number) {
-    this.router.navigateByUrl(`/courses/${courseId}`);
+    return this.router.navigateByUrl(`/courses/${courseId}`);
   }
 
   handleDeleteCourse(courseId: number) {
     const userChoice = confirm('Do you really want to delete this course?');
     if (userChoice) {
-      this.courseList = this.coursesService.removeCourse(courseId);
+      this.coursesService.removeCourse(courseId);
     }
   }
 
   findCourse() {
-    this.courseList = this.filterByName.transform(
-      this.coursesService.getAllCourses(),
-      this.findInputValue
-    );
+    this.coursesService.findCourse(this.findInputValue);
   }
 
   loadMoreCourses() {
-    console.log('loading more...');
+    this.coursesService.loadMoreCourses();
   }
 }

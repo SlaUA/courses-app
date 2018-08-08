@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { NewCourse, CoursesService } from '../core/services/courses-service/courses.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-course-page',
@@ -6,11 +8,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-course-page.component.css']
 })
 export class AddCoursePageComponent {
-  title: string;
-  description: string;
-  date: string;
-  duration: string;
+  model: NewCourse;
 
-  onAddNewCourse() {}
-  onCancel() {}
+  constructor(private coursesService: CoursesService, private router: Router) {
+    this.model = {
+      name: '',
+      description: '',
+      length: 0,
+      date: Date.now(),
+      isTopRated: false,
+      authors: []
+    };
+  }
+
+  onAddNewCourse() {
+    this.coursesService.createCourse(this.model)
+      .subscribe(() => this.router.navigateByUrl('/'));
+  }
+
+  onCancel() {
+    this.router.navigateByUrl('/');
+  }
 }
