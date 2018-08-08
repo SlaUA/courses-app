@@ -1,18 +1,18 @@
 <label>
   Title
-  <input [(ngModel)]="title" type="text" placeholder="Title">
+  <input [(ngModel)]="model.name" type="text" placeholder="name">
 </label>
 <label>
   Description
-  <textarea [(ngModel)]="description" placeholder="Description"></textarea>
+  <textarea [(ngModel)]="model.description" placeholder="Description"></textarea>
 </label>
 <label>
   Date
-  <input [(ngModel)]="date" type="text" placeholder="Date">
+  <input [(ngModel)]="model.date" type="text" placeholder="Date">
 </label>
 <label>
   Duration
-  <input [(ngModel)]="duration" type="text" placeholder="Duration">
+  <input [(ngModel)]="model.length" type="text" placeholder="Length">
 </label>
 <div class="actionButtons">
   <button (click)="onAddNewCourse()">Save</button>

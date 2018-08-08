@@ -37,18 +37,15 @@ export class CourseListComponent implements OnInit, OnDestroy {
   handleDeleteCourse(courseId: number) {
     const userChoice = confirm('Do you really want to delete this course?');
     if (userChoice) {
-      this.courseList = this.coursesService.removeCourse(courseId);
+      this.coursesService.removeCourse(courseId);
     }
   }
 
   findCourse() {
-    this.courseList = this.filterByName.transform(
-      this.courseList,
-      this.findInputValue
-    );
+    this.coursesService.findCourse(this.findInputValue);
   }
 
   loadMoreCourses() {
-    console.log('loading more...');
+    this.coursesService.loadMoreCourses();
   }
 }

@@ -7,6 +7,6 @@ import { Course } from '../../services/courses-service/courses.service';
 })
 export class OrderByPipe implements PipeTransform {
   transform(value: Course[]): Course[] {
-    return value.sort((a, b) => a.creationDate - b.creationDate);
+    return value.sort((a, b) => a.date - b.date);
   }
 }

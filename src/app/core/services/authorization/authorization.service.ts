@@ -8,7 +8,6 @@ import {Router} from '@angular/router';
 interface User {
   email: string;
   password?: string;
-  hash?: string;
 }
 
 @Injectable({
@@ -32,6 +31,10 @@ export class AuthorizationService {
     } catch (error) {
       this.loggedInSubject.next(false);
     }
+  }
+
+  getToken(): string {
+    return this.window.localStorage.getItem(this.TOKEN_NAMESPACE);
   }
 
   login(userData: User) {
@@ -60,9 +63,7 @@ export class AuthorizationService {
     this.router.navigateByUrl('/login');
   }
 
-  getUserInfo() {
-    // return this.user;
-  }
+  getUserInfo() {}
 
   isAuthenticated() {
     return this.loggedInSubject.asObservable();

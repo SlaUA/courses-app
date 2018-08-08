@@ -1,7 +1,7 @@
-import {Injectable, OnInit} from '@angular/core';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {switchMap} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { flatMap, switchMap, map } from 'rxjs/operators';
 
 export interface Course {
   id: number;
@@ -10,6 +10,7 @@ export interface Course {
   length: number;
   date: number;
   isTopRated: boolean;
+  authors: any[];
 }
 
 export interface NewCourse {
@@ -18,6 +19,7 @@ export interface NewCourse {
   length: number;
   date: number;
   isTopRated: boolean;
+  authors: any[];
 }
 
 @Injectable({
@@ -25,23 +27,45 @@ export interface NewCourse {
 })
 export class CoursesService {
   private allCourses: BehaviorSubject<Course []> = new BehaviorSubject<Course []>([]);
-  private lastCount: Number = 4;
+  private lastCount: any = 4;
+  private loadMoreCount: any = 4;
 
   constructor(private http: HttpClient) {
-    this.http.get(`courses?start=0&count=${this.lastCount}`).subscribe((response: Course[]) => {
+    this.retrieveAllCourses().subscribe((response: Course[]) => {
       this.allCourses.next(response);
     });
+  }
+
+  retrieveAllCourses() {
+    return this.http.get(`courses?start=0&count=${this.lastCount}`);
   }
 
   getAllCourses(): Observable<Course[]> {
     return this.allCourses.asObservable();
   }
 
-  createCourse(courseDetails: NewCourse): Course[] {
-    // last course id will be incremented to have consistent values
-    const id = this.allCourses[this.allCourses.length - 1].id + 1;
-    this.allCourses = [{id, ...courseDetails}, ...this.allCourses];
-    return this.allCourses;
+  loadMoreCourses() {
+    this.lastCount += this.loadMoreCount;
+    this.retrieveAllCourses().subscribe((response: Course[]) => {
+      this.allCourses.next(response);
+    });
+  }
+
+  findCourse(textToFind: String) {
+    this.http.get(`courses?textFragment=${textToFind}`).subscribe((response: Course[]) => {
+      this.allCourses.next(response);
+    });
+  }
+
+  createCourse(courseDetails: NewCourse): Observable<any> {
+    return this.http
+      .post(`courses`, courseDetails)
+      .pipe(
+        flatMap(() => this.retrieveAllCourses()),
+        map((response: Course[]) => {
+          this.allCourses.next(response);
+        })
+      );
   }
 
   getCourseById(id: number): Observable<Course | null> {
@@ -50,15 +74,17 @@ export class CoursesService {
     }));
   }
 
-  updateCourse(id: number, courseDetails: NewCourse): Course[] {
-    this.allCourses = this.allCourses.map(
-      (course) => (course.id === id ? {...course, ...courseDetails} : course)
-    );
-    return this.allCourses;
+  updateCourse(id: number, courseDetails: NewCourse) {
+    this.http
+      .patch(`courses/${id}`, courseDetails)
+      .pipe(flatMap(() => this.retrieveAllCourses()))
+      .subscribe((response: Course[]) => this.allCourses.next(response));
   }
 
-  removeCourse(id: number): Course[] {
-    this.allCourses = this.allCourses.filter((course) => course.id !== id);
-    return this.allCourses;
+  removeCourse(id: number) {
+    this.http
+      .delete(`courses/${id}`)
+      .pipe(flatMap(() => this.retrieveAllCourses()))
+      .subscribe((response: Course[]) => this.allCourses.next(response));
   }
 }

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxWindowTokenModule } from 'ngx-window-token';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { PageComponent } from './shared/page/page.component';
@@ -23,6 +23,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { EditCourseComponent } from './edit-course/edit-course.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BaseUrlHttpInterceptor } from './core/interceptors/base-url-http-interceptor';
+import { AuthHttpInterceptor } from './core/interceptors/auth-http-interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +49,12 @@ import { BaseUrlHttpInterceptor } from './core/interceptors/base-url-http-interc
     provide: HTTP_INTERCEPTORS,
     useClass: BaseUrlHttpInterceptor,
     multi: true,
+  }, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthHttpInterceptor,
+    multi: true,
   }],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}
