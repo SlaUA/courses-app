@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { WINDOW } from 'ngx-window-token';
 import { BehaviorSubject, of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import {Router} from '@angular/router';
 
 interface User {
@@ -26,7 +26,7 @@ export class AuthorizationService {
     let isLoggedIn;
 
     try {
-      isLoggedIn = Boolean(JSON.parse(this.window.localStorage.getItem(this.TOKEN_NAMESPACE)));
+      isLoggedIn = Boolean(this.window.localStorage.getItem(this.TOKEN_NAMESPACE));
       this.loggedInSubject.next(isLoggedIn);
     } catch (error) {
       this.loggedInSubject.next(false);
@@ -34,7 +34,7 @@ export class AuthorizationService {
   }
 
   getToken(): string {
-    return this.window.localStorage.getItem(this.TOKEN_NAMESPACE);
+    return this.window.localStorage.getItem(this.TOKEN_NAMESPACE) || '';
   }
 
   login(userData: User) {
@@ -50,8 +50,8 @@ export class AuthorizationService {
             return of(false);
           }
 
+          this.window.localStorage.setItem(this.TOKEN_NAMESPACE, response.token);
           this.loggedInSubject.next(true);
-          this.window.localStorage.setItem(this.TOKEN_NAMESPACE, JSON.stringify(response.token));
           return of(true);
         })
       );
@@ -63,7 +63,9 @@ export class AuthorizationService {
     this.router.navigateByUrl('/login');
   }
 
-  getUserInfo() {}
+  getUserInfo() {
+
+  }
 
   isAuthenticated() {
     return this.loggedInSubject.asObservable();
