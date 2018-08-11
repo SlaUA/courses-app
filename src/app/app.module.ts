@@ -24,6 +24,7 @@ import { EditCourseComponent } from './edit-course/edit-course.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BaseUrlHttpInterceptor } from './core/interceptors/base-url-http-interceptor';
 import { AuthHttpInterceptor } from './core/interceptors/auth-http-interceptor';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { AuthHttpInterceptor } from './core/interceptors/auth-http-interceptor';
     AddCoursePageComponent,
     PageNotFoundComponent,
     EditCourseComponent,
+    LoadingComponent,
   ],
   imports: [RouterModule.forRoot(routes), BrowserModule, FormsModule, NgxWindowTokenModule, HttpClientModule],
   providers: [{

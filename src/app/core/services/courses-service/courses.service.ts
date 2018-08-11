@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { flatMap, switchMap, map } from 'rxjs/operators';
+import { LoadingService } from '../loading/loading.service';
 
 export interface Course {
   id: number;
@@ -30,14 +31,20 @@ export class CoursesService {
   private lastCount: any = 4;
   private loadMoreCount: any = 4;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private loadingService: LoadingService) {
     this.retrieveAllCourses().subscribe((response: Course[]) => {
       this.allCourses.next(response);
     });
   }
 
   retrieveAllCourses() {
-    return this.http.get(`courses?start=0&count=${this.lastCount}`);
+    this.loadingService.startLoading();
+    return this.http.get(`courses?start=0&count=${this.lastCount}`).pipe(
+      map((courses) => {
+        this.loadingService.stopLoading();
+        return courses;
+      })
+    );
   }
 
   getAllCourses(): Observable<Course[]> {
@@ -45,24 +52,30 @@ export class CoursesService {
   }
 
   loadMoreCourses() {
+    this.loadingService.startLoading();
     this.lastCount += this.loadMoreCount;
     this.retrieveAllCourses().subscribe((response: Course[]) => {
+      this.loadingService.stopLoading();
       this.allCourses.next(response);
     });
   }
 
   findCourse(textToFind: String) {
+    this.loadingService.startLoading();
     this.http.get(`courses?textFragment=${textToFind}`).subscribe((response: Course[]) => {
+      this.loadingService.stopLoading();
       this.allCourses.next(response);
     });
   }
 
   createCourse(courseDetails: NewCourse): Observable<any> {
+    this.loadingService.startLoading();
     return this.http
       .post(`courses`, courseDetails)
       .pipe(
         flatMap(() => this.retrieveAllCourses()),
         map((response: Course[]) => {
+          this.loadingService.stopLoading();
           this.allCourses.next(response);
         })
       );
@@ -75,6 +88,7 @@ export class CoursesService {
   }
 
   updateCourse(id: number, courseDetails: NewCourse) {
+    this.loadingService.startLoading();
     this.http
       .patch(`courses/${id}`, courseDetails)
       .pipe(flatMap(() => this.retrieveAllCourses()))
@@ -82,6 +96,7 @@ export class CoursesService {
   }
 
   removeCourse(id: number) {
+    this.loadingService.startLoading();
     this.http
       .delete(`courses/${id}`)
       .pipe(flatMap(() => this.retrieveAllCourses()))

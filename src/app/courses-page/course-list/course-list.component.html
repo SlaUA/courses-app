@@ -1,10 +1,10 @@
 <div class="searchHeader">
   <div class="left">
-    <input [(ngModel)]="findInputValue"
+    <input
+      (input)="inputEventSubject.next($event)"
       class="form-control searchInput"
       type="text"
       placeholder="name, fragment or date">
-    <button (click)="findCourse()" class="btn btn-secondary searchButton">Search</button>
   </div>
   <a routerLink='/courses/new' class="btn btn-primary">Add Course</a>
 </div>

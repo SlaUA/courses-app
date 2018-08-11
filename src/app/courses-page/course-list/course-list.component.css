@@ -33,11 +33,6 @@
   width: 40%;
 }
 
-.searchButton {
-  margin-left: 10px;
-  flex-shrink: 0;
-}
-
 .loadMoreButton {
   flex-shrink: 0;
 }
