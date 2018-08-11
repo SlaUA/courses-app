@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Course, CoursesService } from '../../core/services/courses-service/courses.service';
 import { FilterByNamePipe } from '../../core/pipes/filter-by-name/filter-by-name.pipe';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-course-list',
@@ -11,23 +12,36 @@ import { Subscription } from 'rxjs';
   providers: [FilterByNamePipe]
 })
 export class CourseListComponent implements OnInit, OnDestroy {
-  findInputValue = '';
   courseList: Course[];
   courseListSubscription: Subscription;
+  findCourseSubscription: Subscription;
+
+  inputEventSubject = new Subject<string>();
 
   constructor(
     private coursesService: CoursesService,
     private filterByName: FilterByNamePipe,
     private router: Router
-  ) {}
+  ) {
+    this.findCourseSubscription = this.inputEventSubject.pipe(
+      map((event: any) => event.target.value),
+      debounceTime(500),
+      distinctUntilChanged()
+    ).subscribe((value) => {
+      if (value.length >= 3) {
+        this.coursesService.findCourse(value);
+      }
+    });
+  }
 
   ngOnInit() {
     this.courseListSubscription = this.coursesService.getAllCourses()
       .subscribe((courses) => this.courseList = courses);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.courseListSubscription.unsubscribe();
+    this.findCourseSubscription.unsubscribe();
   }
 
   handleEditCourse(courseId: number) {
@@ -39,10 +53,6 @@ export class CourseListComponent implements OnInit, OnDestroy {
     if (userChoice) {
       this.coursesService.removeCourse(courseId);
     }
-  }
-
-  findCourse() {
-    this.coursesService.findCourse(this.findInputValue);
   }
 
   loadMoreCourses() {

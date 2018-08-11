@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 export interface User {
   id: number;
+  login: string;
   firstName: string;
   lastName: string;
 }

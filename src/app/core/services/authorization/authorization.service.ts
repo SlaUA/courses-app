@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { WINDOW } from 'ngx-window-token';
 import { BehaviorSubject, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
+import { LoadingService } from '../loading/loading.service';
 
 interface User {
   email: string;
@@ -20,7 +21,7 @@ export class AuthorizationService {
   private http: HttpClient;
   private loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(@Inject(WINDOW) _window, http: HttpClient, private router: Router) {
+  constructor(@Inject(WINDOW) _window, http: HttpClient, private router: Router, private loadingService: LoadingService) {
     this.window = _window;
     this.http = http;
     let isLoggedIn;
@@ -38,6 +39,7 @@ export class AuthorizationService {
   }
 
   login(userData: User) {
+    this.loadingService.startLoading();
     return this.http
       .post('auth/login', {
         login: userData.email,
@@ -45,7 +47,7 @@ export class AuthorizationService {
       })
       .pipe(
         switchMap((response: any) => {
-
+          this.loadingService.stopLoading();
           if (!response.token) {
             return of(false);
           }
@@ -61,10 +63,6 @@ export class AuthorizationService {
     this.loggedInSubject.next(false);
     this.window.localStorage.removeItem(this.TOKEN_NAMESPACE);
     this.router.navigateByUrl('/login');
-  }
-
-  getUserInfo() {
-
   }
 
   isAuthenticated() {
