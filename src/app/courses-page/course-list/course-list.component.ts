@@ -15,12 +15,10 @@ export class CourseListComponent implements OnInit, OnDestroy {
   courseList: Course[];
   courseListSubscription: Subscription;
   findCourseSubscription: Subscription;
-
   inputEventSubject = new Subject<string>();
 
   constructor(
     private coursesService: CoursesService,
-    private filterByName: FilterByNamePipe,
     private router: Router
   ) {
     this.findCourseSubscription = this.inputEventSubject.pipe(
@@ -35,8 +33,9 @@ export class CourseListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.courseListSubscription = this.coursesService.getAllCourses()
-      .subscribe((courses) => this.courseList = courses);
+    this.courseListSubscription = this.coursesService
+      .getAllCourses()
+      .subscribe(({ courses }) => this.courseList = courses);
   }
 
   ngOnDestroy() {

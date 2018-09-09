@@ -17,10 +17,12 @@ export class UserService {
   userSubject: BehaviorSubject<User> = new BehaviorSubject(null);
 
   constructor(private authService: AuthorizationService, private http: HttpClient) {
-    this.authService.isAuthenticated().subscribe((isAuthenticated) => {
-      if (!isAuthenticated) {
+    this.authService.isAuthenticated().subscribe((loggedIn) => {
+
+      if (!loggedIn) {
         return;
       }
+
       this.http.post('auth/userinfo', {}).subscribe((user: User) => this.userSubject.next(user));
     });
   }

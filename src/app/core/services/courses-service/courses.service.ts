@@ -3,6 +3,9 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { flatMap, switchMap, map } from 'rxjs/operators';
 import { LoadingService } from '../loading/loading.service';
+import { Store, select } from '@ngrx/store';
+import { CoursesState, coursesState } from './reducer';
+import * as constants from './constants';
 
 export interface Course {
   id: number;
@@ -27,13 +30,19 @@ export interface NewCourse {
   providedIn: 'root'
 })
 export class CoursesService {
-  private allCourses: BehaviorSubject<Course []> = new BehaviorSubject<Course []>([]);
   private lastCount: any = 4;
   private loadMoreCount: any = 4;
 
-  constructor(private http: HttpClient, private loadingService: LoadingService) {
+  constructor(
+    private http: HttpClient,
+    private loadingService: LoadingService,
+    private store: Store<CoursesState>
+  ) {
     this.retrieveAllCourses().subscribe((response: Course[]) => {
-      this.allCourses.next(response);
+      this.store.dispatch({
+        type: constants.COURSES_LOADED,
+        payload: response
+      });
     });
   }
 
@@ -47,8 +56,8 @@ export class CoursesService {
     );
   }
 
-  getAllCourses(): Observable<Course[]> {
-    return this.allCourses.asObservable();
+  getAllCourses(): Observable<CoursesState> {
+    return this.store.pipe(select(coursesState));
   }
 
   loadMoreCourses() {
@@ -56,7 +65,11 @@ export class CoursesService {
     this.lastCount += this.loadMoreCount;
     this.retrieveAllCourses().subscribe((response: Course[]) => {
       this.loadingService.stopLoading();
-      this.allCourses.next(response);
+      this.store.dispatch({
+        type: constants.COURSES_LOADED,
+        payload: response
+      });
+      return this.getAllCourses();
     });
   }
 
@@ -64,7 +77,11 @@ export class CoursesService {
     this.loadingService.startLoading();
     this.http.get(`courses?textFragment=${textToFind}`).subscribe((response: Course[]) => {
       this.loadingService.stopLoading();
-      this.allCourses.next(response);
+      this.store.dispatch({
+        type: constants.COURSES_LOADED,
+        payload: response
+      });
+      return this.getAllCourses();
     });
   }
 
@@ -76,15 +93,21 @@ export class CoursesService {
         flatMap(() => this.retrieveAllCourses()),
         map((response: Course[]) => {
           this.loadingService.stopLoading();
-          this.allCourses.next(response);
+          this.store.dispatch({
+            type: constants.COURSES_LOADED,
+            payload: response
+          });
+          return this.getAllCourses();
         })
       );
   }
 
   getCourseById(id: number): Observable<Course | null> {
-    return this.allCourses.pipe(switchMap((courses) => {
-      return of(courses.find((course) => course.id === id));
-    }));
+    return this.getAllCourses().pipe(
+      switchMap((courses) => of(
+        courses.find((course) => course.id === id)
+      ))
+    );
   }
 
   updateCourse(id: number, courseDetails: NewCourse) {
@@ -92,7 +115,12 @@ export class CoursesService {
     this.http
       .patch(`courses/${id}`, courseDetails)
       .pipe(flatMap(() => this.retrieveAllCourses()))
-      .subscribe((response: Course[]) => this.allCourses.next(response));
+      .subscribe((response: Course[]) => {
+        this.store.dispatch({
+          type: constants.COURSES_LOADED,
+          payload: response
+        });
+      });
   }
 
   removeCourse(id: number) {
@@ -100,6 +128,11 @@ export class CoursesService {
     this.http
       .delete(`courses/${id}`)
       .pipe(flatMap(() => this.retrieveAllCourses()))
-      .subscribe((response: Course[]) => this.allCourses.next(response));
+      .subscribe((response: Course[]) => {
+        this.store.dispatch({
+          type: constants.COURSES_LOADED,
+          payload: response
+        });
+      });
   }
 }

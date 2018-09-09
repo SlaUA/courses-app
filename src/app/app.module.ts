@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxWindowTokenModule } from 'ngx-window-token';
 import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { PageComponent } from './shared/page/page.component';
@@ -25,6 +27,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BaseUrlHttpInterceptor } from './core/interceptors/base-url-http-interceptor';
 import { AuthHttpInterceptor } from './core/interceptors/auth-http-interceptor';
 import { LoadingComponent } from './loading/loading.component';
+import { authReducer } from './core/services/authorization/reducer';
+import { coursesReducer } from './core/services/courses-service/reducer';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,20 @@ import { LoadingComponent } from './loading/loading.component';
     EditCourseComponent,
     LoadingComponent,
   ],
-  imports: [RouterModule.forRoot(routes), BrowserModule, FormsModule, NgxWindowTokenModule, HttpClientModule],
+  imports: [
+    RouterModule.forRoot(routes),
+    StoreModule.forRoot({
+      authReducer,
+      coursesReducer
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+    }),
+    BrowserModule,
+    FormsModule,
+    NgxWindowTokenModule,
+    HttpClientModule
+  ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: BaseUrlHttpInterceptor,
