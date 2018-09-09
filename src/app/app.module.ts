@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxWindowTokenModule } from 'ngx-window-token';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { PageComponent } from './shared/page/page.component';
@@ -51,7 +52,12 @@ import { authReducer } from './core/services/authorization/reducer';
   ],
   imports: [
     RouterModule.forRoot(routes),
-    StoreModule.forRoot({ authReducer }),
+    StoreModule.forRoot({
+      authReducer,
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+    }),
     BrowserModule,
     FormsModule,
     NgxWindowTokenModule,

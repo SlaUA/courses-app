@@ -1,3 +1,5 @@
+import { createSelector } from '@ngrx/store'
+
 import { AppAction } from '../../actions/actions';
 
 import * as constants from './constants';
@@ -27,3 +29,7 @@ export function authReducer(state: object = initialState, action: AppAction) {
       return state;
   }
 }
+
+export const authState = createSelector(
+  (state: any) => state.authReducer
+);
