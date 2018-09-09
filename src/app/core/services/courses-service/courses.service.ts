@@ -104,7 +104,7 @@ export class CoursesService {
 
   getCourseById(id: number): Observable<Course | null> {
     return this.getAllCourses().pipe(
-      switchMap((courses) => of(
+      switchMap(({ courses }) => of(
         courses.find((course) => course.id === id)
       ))
     );
