@@ -6,24 +6,17 @@ import * as constants from './constants';
 
 export interface AuthState {
   loggedIn: Boolean,
-  token: String,
 };
 
-const initialState = {
-  loggedIn: false,
-  token: '',
-};
+const initialState = false;
 
-export function authReducer(state: object = initialState, action: AppAction) {
+export function authReducer(state: Boolean = initialState, action: AppAction) {
   switch (action.type) {
     case constants.LOGGED_IN:
-      return {
-        loggedIn: true,
-        token: action.payload
-      };
+      return true;
 
     case constants.LOGGED_OUT:
-      return initialState;
+      return false;
 
     default:
       return state;

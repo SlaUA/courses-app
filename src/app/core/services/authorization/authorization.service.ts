@@ -6,6 +6,8 @@ import { LoadingService } from '../loading/loading.service';
 import { Store, select } from '@ngrx/store';
 import { AuthState, authState } from './reducer';
 import * as constants from './constants';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 interface User {
   email: string;
@@ -38,7 +40,6 @@ export class AuthorizationService {
       if (token) {
         this.store.dispatch({
           type: constants.LOGGED_IN,
-          token
         });
       } else {
         this.store.dispatch({
@@ -64,19 +65,21 @@ export class AuthorizationService {
         login: userData.email,
         password: userData.password
       })
-      .subscribe((response: any) => {
-        this.loadingService.stopLoading();
+      .pipe(
+        switchMap((response: any) => {
+          this.loadingService.stopLoading();
 
-        if (!response.token) {
-          return;
-        }
+          if (!response.token) {
+            return of(false);
+          }
 
-        this.window.localStorage.setItem(this.TOKEN_NAMESPACE, response.token);
-        this.store.dispatch({
-          type: constants.LOGGED_IN,
-          token: response.token
-        });
-      });
+          this.window.localStorage.setItem(this.TOKEN_NAMESPACE, response.token);
+          this.store.dispatch({
+            type: constants.LOGGED_IN,
+          });
+          return of(true);
+        })
+      );
   }
 
   logOut() {

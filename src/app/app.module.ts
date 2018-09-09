@@ -28,7 +28,7 @@ import { BaseUrlHttpInterceptor } from './core/interceptors/base-url-http-interc
 import { AuthHttpInterceptor } from './core/interceptors/auth-http-interceptor';
 import { LoadingComponent } from './loading/loading.component';
 import { authReducer } from './core/services/authorization/reducer';
-
+import { coursesReducer } from './core/services/courses-service/reducer';
 
 @NgModule({
   declarations: [
@@ -54,6 +54,7 @@ import { authReducer } from './core/services/authorization/reducer';
     RouterModule.forRoot(routes),
     StoreModule.forRoot({
       authReducer,
+      coursesReducer
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

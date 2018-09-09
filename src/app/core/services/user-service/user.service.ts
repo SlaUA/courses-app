@@ -17,7 +17,7 @@ export class UserService {
   userSubject: BehaviorSubject<User> = new BehaviorSubject(null);
 
   constructor(private authService: AuthorizationService, private http: HttpClient) {
-    this.authService.isAuthenticated().subscribe(({loggedIn}) => {
+    this.authService.isAuthenticated().subscribe((loggedIn) => {
 
       if (!loggedIn) {
         return;
