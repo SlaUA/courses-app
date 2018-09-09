@@ -46,11 +46,15 @@ export class CoursesService {
     });
   }
 
-  retrieveAllCourses() {
+  retrieveAllCourses(): Observable<Course[]> {
     this.loadingService.startLoading();
     return this.http.get(`courses?start=0&count=${this.lastCount}`).pipe(
-      map((courses) => {
+      map((courses: Course[]) => {
         this.loadingService.stopLoading();
+        this.store.dispatch({
+          type: constants.COURSES_LOADED,
+          payload: courses
+        });
         return courses;
       })
     );
