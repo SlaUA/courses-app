@@ -38,12 +38,7 @@ export class CoursesService {
     private loadingService: LoadingService,
     private store: Store<CoursesState>
   ) {
-    this.retrieveAllCourses().subscribe((response: Course[]) => {
-      this.store.dispatch({
-        type: constants.COURSES_LOADED,
-        payload: response
-      });
-    });
+    this.reloadAllCourses();
   }
 
   retrieveAllCourses(): Observable<Course[]> {
