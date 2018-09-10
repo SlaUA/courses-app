@@ -1,22 +1,27 @@
-<div *ngIf="currentCourse">
+<form [formGroup]="currentCourseForm">
   <label>
     Title
-    <input [(ngModel)]="currentCourse.name" type="text" placeholder="Title">
+    <input formControlName="name" type="text" placeholder="Title">
+    <span *ngIf="currentCourseForm.controls.name.invalid && currentCourseForm.controls.name.touched" class="error"></span>
   </label>
   <label>
     Description
-    <textarea class="description" [(ngModel)]="currentCourse.description" placeholder="Description"></textarea>
+    <textarea class="description" formControlName="description" placeholder="Description"></textarea>
   </label>
   <label>
     Date
-    <input [(ngModel)]="currentCourse.date" type="text" placeholder="Date">
+    <input formControlName="date" type="text" placeholder="Date">
   </label>
   <label>
     Duration
-    <input [(ngModel)]="currentCourse.length" type="number" placeholder="Duration">
+    <input formControlName="length" type="number" placeholder="Duration">
+  </label>
+  <label>
+    is Top rated?
+    <input formControlName="isTopRated" type="checkbox">
   </label>
   <div class="actionButtons">
     <button (click)="onUpdateCourse()">Save</button>
     <button (click)="onCancel()">Cancel</button>
   </div>
-</div>
+</form>
