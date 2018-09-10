@@ -28,6 +28,8 @@ export class CourseListComponent implements OnInit, OnDestroy {
     ).subscribe((value) => {
       if (value.length >= 3) {
         this.coursesService.findCourse(value);
+      } else {
+        this.coursesService.reloadAllCourses();
       }
     });
   }

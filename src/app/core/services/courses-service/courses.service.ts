@@ -60,6 +60,16 @@ export class CoursesService {
     );
   }
 
+  reloadAllCourses() {
+    this.retrieveAllCourses().subscribe((response: Course[]) => {
+      this.loadingService.stopLoading();
+      this.store.dispatch({
+        type: constants.COURSES_LOADED,
+        payload: response
+      });
+    });
+  }
+
   getAllCourses(): Observable<CoursesState> {
     return this.store.pipe(select(coursesState));
   }
