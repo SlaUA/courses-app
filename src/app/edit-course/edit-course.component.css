@@ -21,3 +21,7 @@ label {
 .description {
   height: 250px;
 }
+
+.ng-invalid:not(form)  {
+  border: 1px solid red;
+}

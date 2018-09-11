@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { CoursesService } from '../core/services/courses-service/courses.service';
+import { dateValidator } from '../core/validators/dateValidator';
+import { numberValidator } from '../core/validators/numberOnlyValidator';
 
 @Component({
   selector: 'app-edit-course',
@@ -14,19 +16,19 @@ export class EditCourseComponent implements OnInit {
   currentCourseForm = new FormGroup({
     name: new FormControl('', Validators.compose([
       Validators.required,
-      // Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      Validators.maxLength(50),
     ])),
     description: new FormControl('', Validators.compose([
       Validators.required,
-      // Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      Validators.maxLength(500)
     ])),
     date: new FormControl('', Validators.compose([
       Validators.required,
-      // Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      dateValidator(),
     ])),
     length: new FormControl('', Validators.compose([
       Validators.required,
-      // Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      numberValidator()
     ])),
     isTopRated: new FormControl(false),
   });
