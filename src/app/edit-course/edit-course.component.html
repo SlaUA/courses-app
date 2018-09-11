@@ -1,22 +1,58 @@
-<div *ngIf="currentCourse">
+<form [formGroup]="currentCourseForm">
   <label>
     Title
-    <input [(ngModel)]="currentCourse.name" type="text" placeholder="Title">
+    <div *ngIf="currentCourseForm.controls.name.errors" class="error">
+      <div *ngIf="currentCourseForm.controls.name.errors.required">
+        required
+      </div>
+      <div *ngIf="currentCourseForm.controls.name.errors.maxlength">
+        max length is 50 symbols
+      </div>
+    </div>
+    <input formControlName="name" type="text" placeholder="Title">
   </label>
   <label>
     Description
-    <textarea class="description" [(ngModel)]="currentCourse.description" placeholder="Description"></textarea>
+    <div *ngIf="currentCourseForm.controls.description.errors" class="error">
+      <div *ngIf="currentCourseForm.controls.description.errors.required">
+        required
+      </div>
+      <div *ngIf="currentCourseForm.controls.description.errors.maxlength">
+        max length is 500 symbols
+      </div>
+    </div>
+    <textarea class="description" formControlName="description" placeholder="Description"></textarea>
   </label>
   <label>
     Date
-    <input [(ngModel)]="currentCourse.date" type="text" placeholder="Date">
+    <div *ngIf="currentCourseForm.controls.date.errors" class="error">
+      <div *ngIf="currentCourseForm.controls.date.errors.required">
+        required
+      </div>
+      <div *ngIf="currentCourseForm.controls.date.errors.dateFormat">
+        {{currentCourseForm.controls.date.errors.dateFormat}}
+      </div>
+    </div>
+    <input formControlName="date" type="text" placeholder="Date">
   </label>
   <label>
     Duration
-    <input [(ngModel)]="currentCourse.length" type="number" placeholder="Duration">
+    <div *ngIf="currentCourseForm.controls.length.errors" class="error">
+      <div *ngIf="currentCourseForm.controls.length.errors.required">
+        required
+      </div>
+      <div *ngIf="currentCourseForm.controls.length.errors.numberFormat">
+        {{currentCourseForm.controls.length.errors.numberFormat}}
+      </div>
+    </div>
+    <input formControlName="length" type="text" placeholder="Duration">
+  </label>
+  <label>
+    is Top rated?
+    <input formControlName="isTopRated" type="checkbox">
   </label>
   <div class="actionButtons">
-    <button (click)="onUpdateCourse()">Save</button>
+    <button [disabled]="currentCourseForm.invalid" (click)="onUpdateCourse()">Save</button>
     <button (click)="onCancel()">Cancel</button>
   </div>
-</div>
+</form>

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxWindowTokenModule } from 'ngx-window-token';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
@@ -59,6 +59,7 @@ import { coursesReducer } from './core/services/courses-service/reducer';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
+    ReactiveFormsModule,
     BrowserModule,
     FormsModule,
     NgxWindowTokenModule,
